@@ -1,23 +1,28 @@
-from django.http import HttpResponse
 from django.urls import path, register_converter, re_path
 
 from .converters import ISBNConverter
+from . import views
 
 app_name = 'catalog'
 
 register_converter(ISBNConverter, 'isbn')
 
 urlpatterns = [
-    path('', lambda request: HttpResponse('Books list'), name='book-list'),
-    path('<int:pk>/', lambda request, pk: HttpResponse(f'Book detail: {pk}'), name='book-detail'),
-    path('genre/<slug:slug>/', lambda request, slug: HttpResponse(f'Books of genre: {slug}'), name='books-by-genre'),
-    path('year/<int:year>/', lambda request, year: HttpResponse(f'Books for year: {year}'), name='books-by-year'),
+    path('', views.book_list, name='book-list'),
+    path('<int:pk>/', views.book_detail, name='book-detail'),
+    path('genre/<slug:slug>/', views.books_by_genre, name='books-by-genre'),
+    path('year/<int:year>/', views.books_by_year, name='books-by-year'),
 
-    path('isbn/<isbn:isbn>/', lambda request, isbn: HttpResponse(f'Book ISBN: {isbn}'), name='book-by-isbn'),
+    path('isbn/<isbn:isbn>/', views.book_by_isbn, name='book-by-isbn'),
 
     re_path(
         r'^archive/(?P<year>\d{4})-(?P<month>0[1-9]|1[0-2])/$',
-        lambda request, year, month: HttpResponse(f'Archive: {year}-{month}'),
+        views.book_archive,
         name='book-archive',
     ),
+
+    path('search/', views.book_search, name='book-search'),
+    path('api/ping/', views.api_ping, name='api-ping'),
+    path('debug/', views.debug, name='debug'),
+    path('user/<int:pk>/', views.get_user, name='get-user')
 ]
