@@ -1,13 +1,14 @@
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.contrib.auth.models import User
+from .data import BOOKS
 
 
 def book_list(request):
-    return HttpResponse('Books list')
-
+    context = {'books': BOOKS}
+    return render(request, 'catalog/book_list.html', context)
 
 def book_detail(request, pk):
     return HttpResponse(f'Details of book: {pk}')

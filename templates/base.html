@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bookshelf{% endblock %}</title>
+</head>
+<body>
+<main>
+    <aside>
+        {% load catalog_extras %}
+
+        {% latest_books 3 %}
+    </aside>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'catalog:book-list' %}">Books</a>
+            </li>
+        </ul>
+    </nav>
+
+    <form action="{% url 'catalog:book-search' %}" method="get">
+        <input type="text" placeholder="Search books..." name="q" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% block content %}{% endblock %}
+
+    <footer>© 2026 Bookshelf</footer>
+</main>
+</body>
+</html>

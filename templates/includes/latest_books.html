@@ -1,0 +1,12 @@
+<div>
+    <h2>New arrivals</h2>
+
+    <ul>
+        {% for book in books %}
+        <li>
+            Title: {{ book.title|title }}
+            Date: <a href="{% url 'catalog:books-by-year' book.year%}">{{book.published|date:'d.m.Y'}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
