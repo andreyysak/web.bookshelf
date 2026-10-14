@@ -25,6 +25,7 @@ class Book(models.Model):
         choices=Format.choices,
         default=Format.PAPER
     )
+    language = models.CharField(max_length=4, default='en')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
