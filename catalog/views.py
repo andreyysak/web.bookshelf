@@ -3,12 +3,17 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.contrib.auth.models import User
-from .data import BOOKS
+from django.core.paginator import Paginator
+from .models import Book
 
 
 def book_list(request):
-    context = {'books': BOOKS}
-    return render(request, 'catalog/book_list.html', context)
+    books = Book.objects.order_by('-price', 'title')
+    p = Paginator(books, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    return render(request, 'catalog/book_list.html', {'page_obj': page_obj})
+
 
 def book_detail(request, pk):
     return HttpResponse(f'Details of book: {pk}')
