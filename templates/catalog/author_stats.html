@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Author Stats{% endblock %}
+
+{% block content %}
+    <div style="display: flex; align-items: flex-start; justify-content: space-around; gap: 50px; margin-right: 200px">
+        <ul>
+            {% for stat in stats %}
+            <li>{{stat.name}}: total = {{stat.total}}, avg = {{stat.avg|floatformat:1|default:'-'}}</li>
+            {% endfor %}
+        </ul>
+        <ul>
+            <li>Average price: {{book_stats.avg_price|floatformat:2}}</li>
+            <li>Min pages: {{book_stats.min_pages}}</li>
+            <li>Max pages: {{book_stats.max_pages}}</li>
+        </ul>
+        <ul>
+            {% for genre in top_genres %}
+            <li>{{genre.name}}: {{genre.count}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

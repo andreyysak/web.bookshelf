@@ -2,8 +2,18 @@
 
 <li>
     Title: {{book.title|title}} <br>
-    Published: <a href="{% url 'catalog:books-by-year' book.published_year.year %}">{{book.published_year|date:'d.m.Y'}}</a> <br>
+    Published: <a
+        href="{% url 'catalog:books-by-year' book.published_year.year %}">{{book.published_year|date:'d.m.Y'}}</a> <br>
     Pages: {{ book.pages }} page{{ book.pages|pluralize }} <br>
     Description: {{book.description|truncatewords:30}} <br>
-    Reading time: {{book.description|reading_time}}
+    Reading time: {{book.description|reading_time}} <br>
+    Author: {{book.author.name}} <br>
+    Genres:
+    {% for genre in book.genres.all %}
+    <span>{{genre}},</span>
+    {% endfor %} <br>
+    Good reviews:
+    {% for review in book.good_reviews %}
+    <span>{{review}}</span> <br>
+    {% endfor %}
 </li>

@@ -90,7 +90,7 @@ class Book(models.Model):
         verbose_name_plural = 'Books'
         indexes = [models.Index(fields=['published_year'])]
         constraints = [models.CheckConstraint(
-            check=Q(pages__gt=0),
+            condition=Q(pages__gt=0),
             name='check_pages'
         )]
 

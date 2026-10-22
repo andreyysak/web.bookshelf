@@ -19,6 +19,6 @@ class Review(models.Model):
     class Meta:
         ordering = ['-created_at']
         constraints = [models.CheckConstraint(
-            check=Q(rating__gte=1, rating__lte=5),
+            condition=Q(rating__gte=1, rating__lte=5),
             name='check_rating'
         )]

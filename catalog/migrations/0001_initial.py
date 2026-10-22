@@ -36,6 +36,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='book',
-            constraint=models.CheckConstraint(check=models.Q(('pages__gt', 0)), name='check_pages'),
+            constraint=models.CheckConstraint(condition=models.Q(('pages__gt', 0)), name='check_pages'),
         ),
     ]

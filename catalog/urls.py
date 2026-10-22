@@ -24,5 +24,7 @@ urlpatterns = [
     path('search/', views.book_search, name='book-search'),
     path('api/ping/', views.api_ping, name='api-ping'),
     path('debug/', views.debug, name='debug'),
-    path('user/<int:pk>/', views.get_user, name='get-user')
+    path('user/<int:pk>/', views.get_user, name='get-user'),
+
+    path('stats/', views.author_stats, name='author-stats')
 ]

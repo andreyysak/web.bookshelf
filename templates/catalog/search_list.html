@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+    {% for book in books %}
+        {% include 'includes/book_card.html' %}
+    {% empty %}
+    <div></div>
+    {% endfor %}
+</ul>
+{% endblock %}

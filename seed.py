@@ -3,6 +3,7 @@ from datetime import date
 from django.utils.text import slugify
 
 from catalog.models import Book, Author, AuthorProfile, Genre, BookGenre
+from reviews.models import Review
 
 # name: (birth_date, website)
 authors_data = {
@@ -60,6 +61,53 @@ books_data = [
     ('The Hobbit', 1937, 310, 320, 'paper', True, 'J.R.R. Tolkien', ['Fantasy']),
 ]
 
+# title: [(rating, text), ...]
+# Robert C. Martin has 2 books with several reviews each: checks Count(distinct=True)
+# books without reviews (e.g. Learning PYTHON, The Mythical Man-Month): Avg -> None
+reviews_data = {
+    'Clean Code': [
+        (5, 'Changed how I name things.'),
+        (4, 'Great advice, a bit dogmatic in places.'),
+        (3, 'Examples in Java feel dated.'),
+    ],
+    'The Clean Coder': [
+        (4, 'Good book about professionalism.'),
+        (2, 'Too many personal stories.'),
+    ],
+    'Fluent Python': [
+        (5, 'The best deep dive into Python.'),
+        (5, 'Explains the data model perfectly.'),
+        (4, 'Huge, but worth it.'),
+    ],
+    'Python Crash Course': [
+        (4, 'Perfect for beginners.'),
+        (3, 'The projects part is too long.'),
+    ],
+    'Two Scoops of Django': [
+        (5, 'Must-read for every Django developer.'),
+    ],
+    'Grokking Algorithms': [
+        (5, 'Algorithms with pictures, finally clear.'),
+        (4, 'Light and easy to read.'),
+    ],
+    'Atomic Habits': [
+        (5, 'Practical and motivating.'),
+        (3, 'One idea stretched into a book.'),
+    ],
+    'Sapiens': [
+        (4, 'Fascinating overview of history.'),
+        (2, 'Too many bold claims.'),
+    ],
+    'The Hobbit': [
+        (5, 'A classic adventure.'),
+        (5, 'Read it to my kids, they loved it.'),
+    ],
+    'Rich Dad Poor Dad': [
+        (1, 'Mostly common sense and anecdotes.'),
+        (3, 'Good mindset, little practical advice.'),
+    ],
+}
+
 # get_or_create / update_or_create: the script can be run repeatedly without duplicates
 authors = {}
 for name, (birth_date, website) in authors_data.items():
@@ -90,4 +138,10 @@ for i, (title, year, pages, price, fmt, available, author, genre_names) in enume
     BookGenre.objects.filter(book=book).update(is_primary=False)
     BookGenre.objects.filter(book=book, genre=genres[genre_names[0]]).update(is_primary=True)
 
-print(f'Authors: {Author.objects.count()}, Genres: {Genre.objects.count()}, Books: {Book.objects.count()}')
+for title, items in reviews_data.items():
+    book = Book.objects.get(slug=slugify(title))
+    for rating, text in items:
+        Review.objects.get_or_create(book=book, text=text, defaults={'rating': rating})
+
+print(f'Authors: {Author.objects.count()}, Genres: {Genre.objects.count()}, Books: {Book.objects.count()}, '
+      f'Reviews: {Review.objects.count()}')
