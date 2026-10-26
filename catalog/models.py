@@ -108,3 +108,14 @@ class BookGenre(models.Model):
             models.UniqueConstraint(fields=['book', 'genre'], name='unique_book_genre'),
             models.UniqueConstraint(fields=['book'], condition=Q(is_primary=True), name='unique_primary_genre')
         ]
+
+
+class Stock(models.Model):
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='stock')
+    quantity = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.book.title} - {self.quantity}'
+
+    class Meta:
+        constraints = [models.CheckConstraint(condition=Q(quantity__gte=0), name='check_quantity')]

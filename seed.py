@@ -2,7 +2,7 @@ from datetime import date
 
 from django.utils.text import slugify
 
-from catalog.models import Book, Author, AuthorProfile, Genre, BookGenre
+from catalog.models import Book, Author, AuthorProfile, Genre, BookGenre, Stock
 from reviews.models import Review
 
 # name: (birth_date, website)
@@ -108,6 +108,17 @@ reviews_data = {
     ],
 }
 
+# title: quantity
+# unavailable books always get 0; books not listed here get DEFAULT_STOCK
+# Fluent Python: exactly 1 copy (buy the last one -> 0, a second buy must fail)
+# Clean Code: 3 copies (buying 5 must fail and leave quantity unchanged)
+DEFAULT_STOCK = 10
+stock_data = {
+    'Fluent Python': 1,
+    'Clean Code': 3,
+    'The Hobbit': 25,
+}
+
 # get_or_create / update_or_create: the script can be run repeatedly without duplicates
 authors = {}
 for name, (birth_date, website) in authors_data.items():
@@ -138,10 +149,13 @@ for i, (title, year, pages, price, fmt, available, author, genre_names) in enume
     BookGenre.objects.filter(book=book).update(is_primary=False)
     BookGenre.objects.filter(book=book, genre=genres[genre_names[0]]).update(is_primary=True)
 
+    quantity = stock_data.get(title, DEFAULT_STOCK) if available else 0
+    Stock.objects.update_or_create(book=book, defaults={'quantity': quantity})
+
 for title, items in reviews_data.items():
     book = Book.objects.get(slug=slugify(title))
     for rating, text in items:
         Review.objects.get_or_create(book=book, text=text, defaults={'rating': rating})
 
 print(f'Authors: {Author.objects.count()}, Genres: {Genre.objects.count()}, Books: {Book.objects.count()}, '
-      f'Reviews: {Review.objects.count()}')
+      f'Reviews: {Review.objects.count()}, Stock: {Stock.objects.count()}')
