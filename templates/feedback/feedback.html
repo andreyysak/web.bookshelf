@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+
+<form method="post" style="display: flex; flex-direction: column; gap: 12px; max-width: 320px" novalidate>
+    {% csrf_token %}
+    {{form.non_field_errors}}
+    {{form.name.label_tag}}
+    {{form.name}}
+    {{form.name.errors}}
+    {{form.email.label_tag}}
+    {{form.email}}
+    {{form.email.errors}}
+    {{form.topic.label_tag}}
+    {{form.topic}}
+    {{form.topic.errors}}
+    {{form.company.label_tag}}
+    {{form.company}}
+    {{form.company.errors}}
+    {{form.message.label_tag}}
+    {{form.message}}
+    {{form.message.errors}}
+    <button type="submit">Send</button>
+</form>
+{% endblock %}

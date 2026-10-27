@@ -21,9 +21,17 @@
     </nav>
 
     <form action="{% url 'catalog:book-search' %}" method="get">
-        <input type="text" placeholder="Search books..." name="q" required>
+        <input type="text" placeholder="Search books..." name="q">
         <button type="submit">Search</button>
     </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     {% block content %}{% endblock %}
 

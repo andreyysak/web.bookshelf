@@ -7,13 +7,15 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q, Prefetch
 
+from .forms import BookSearchForm
 from .models import Book, Author, Genre
 from reviews.models import Review
 
 
 def book_list(request):
     books = (Book.objects.order_by('-price', 'title').select_related('author')
-             .prefetch_related('genres', Prefetch('reviews', queryset=Review.objects.filter(rating__gte=4), to_attr='good_reviews')).all())
+             .prefetch_related('genres', Prefetch('reviews', queryset=Review.objects.filter(rating__gte=4),
+                                                  to_attr='good_reviews')).all())
     p = Paginator(books, 8)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
@@ -21,16 +23,31 @@ def book_list(request):
 
 
 def book_search(request):
-    query = request.GET.get('q')
+    form = BookSearchForm(request.GET)
+    books = Book.objects.select_related('author').prefetch_related('genres')
 
-    if not query:
-        return HttpResponseBadRequest('Query parameter "q" is required')
+    if form.is_valid():
+        q = form.cleaned_data.get('q')
+        genre = form.cleaned_data.get('genre')
+        from_year = form.cleaned_data.get('from_year')
+        to_year = form.cleaned_data.get('to_year')
+        from_price = form.cleaned_data.get('from_price')
+        to_price = form.cleaned_data.get('to_price')
 
-    books = Book.objects.filter(
-        Q(title__icontains=query) | Q(author__name__icontains=query) | Q(isbn__icontains=query)).select_related(
-        'author').prefetch_related('genres').all()
-    context = {'books': books}
+        if q:
+            books = books.filter(Q(title__icontains=q) | Q(author__name__icontains=q) | Q(isbn__icontains=q))
+        if genre is not None:
+            books = books.filter(genres=genre)
+        if from_year is not None:
+            books = books.filter(published_year__year__gte=from_year)
+        if to_year is not None:
+            books = books.filter(published_year__year__lte=to_year)
+        if from_price is not None:
+            books = books.filter(price__gte=from_price)
+        if to_price is not None:
+            books = books.filter(price__lte=to_price)
 
+    context = {'books': books, 'form': form}
     return render(request, 'catalog/search_list.html', context)
 
 
@@ -39,7 +56,8 @@ def author_stats(request):
     book_stats = Book.objects.aggregate(avg_price=Avg('price'), min_pages=Min('pages'), max_pages=Max('pages'))
     top_genres = Genre.objects.annotate(count=Count('books')).order_by('-count')[:3]
 
-    return render(request, 'catalog/author_stats.html', {'stats': stats, 'book_stats': book_stats, 'top_genres': top_genres})
+    return render(request, 'catalog/author_stats.html',
+                  {'stats': stats, 'book_stats': book_stats, 'top_genres': top_genres})
 
 
 def book_detail(request, pk):
