@@ -6,7 +6,7 @@ from catalog.models import Book
 
 
 class Review(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
@@ -14,11 +14,12 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.book} — {self.rating}/5'
+        return f"{self.book} — {self.rating}/5"
 
     class Meta:
-        ordering = ['-created_at']
-        constraints = [models.CheckConstraint(
-            condition=Q(rating__gte=1, rating__lte=5),
-            name='check_rating'
-        )]
+        ordering = ["-created_at"]  # noqa: RUF012
+        constraints = [  # noqa: RUF012
+            models.CheckConstraint(
+                condition=Q(rating__gte=1, rating__lte=5), name="check_rating"
+            )
+        ]
