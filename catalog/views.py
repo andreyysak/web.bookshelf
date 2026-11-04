@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.paginator import Paginator
 from django.db.models import Prefetch, Q
 from django.db.models.aggregates import Avg, Count, Max, Min
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
+from django.views.generic import ListView
 
 from reviews.models import Review
 
@@ -13,24 +13,43 @@ from .forms import BookForm, BookSearchForm
 from .models import Author, Book, Genre
 
 
-def book_list(request):
-    books = (
-        Book.objects.order_by("-price", "title")
-        .select_related("author")
-        .prefetch_related(
-            "genres",
-            Prefetch(
-                "reviews",
-                queryset=Review.objects.filter(rating__gte=4),
-                to_attr="good_reviews",
-            ),
+class BookListView(ListView):
+    model = Book
+    template_name = "catalog/book_list.html"
+    paginate_by = 10
+    context_object_name = "books"
+
+    def get_queryset(self):
+        qs = (
+            Book.objects.select_related("author")
+            .prefetch_related(
+                "genres",
+                Prefetch(
+                    "reviews",
+                    queryset=Review.objects.filter(rating__gte=4),
+                    to_attr="good_reviews",
+                ),
+            )
+            .order_by("-created_at")
         )
-        .all()
-    )
-    p = Paginator(books, 8)
-    page_number = request.GET.get("page")
-    page_obj = p.get_page(page_number)
-    return render(request, "catalog/book_list.html", {"page_obj": page_obj})
+        q = self.request.GET.get("q")
+        genre = self.request.GET.get("genre")
+        if q:
+            qs = qs.filter(
+                Q(title__icontains=q)
+                | Q(author__name__icontains=q)
+                | Q(isbn__icontains=q)
+            )
+        if genre:
+            qs = qs.filter(genres__slug=genre)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["q"] = self.request.GET.get("q", "")
+        context["genres"] = Genre.objects.all()
+        context["genre"] = self.request.GET.get("genre", "")
+        return context
 
 
 def book_search(request):

@@ -8,7 +8,7 @@ app_name = "catalog"
 register_converter(ISBNConverter, "isbn")
 
 urlpatterns = [
-    path("", views.book_list, name="book-list"),
+    path("", views.BookListView.as_view(), name="book-list"),
     path("<int:pk>/", views.book_detail, name="book-detail"),
     path("genre/<slug:slug>/", views.books_by_genre, name="books-by-genre"),
     path("year/<int:year>/", views.books_by_year, name="books-by-year"),
