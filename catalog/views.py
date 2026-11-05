@@ -4,9 +4,18 @@ from django.db.models import Prefetch, Q
 from django.db.models.aggregates import Avg, Count, Max, Min
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
-from django.views.generic import ListView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 
+from reviews.forms import ReviewForm
 from reviews.models import Review
 
 from .forms import BookForm, BookSearchForm
@@ -50,6 +59,54 @@ class BookListView(ListView):
         context["genres"] = Genre.objects.all()
         context["genre"] = self.request.GET.get("genre", "")
         return context
+
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = "catalog/book_detail.html"
+    context_object_name = "book"
+
+    def get_queryset(self):
+        return Book.objects.select_related("author")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book = context["book"]
+        context["reviews"] = book.reviews.all()
+        context["review_form"] = ReviewForm()
+        return context
+
+
+class BookCreateView(CreateView):
+    model = Book
+    form_class = BookForm
+    template_name = "catalog/book_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Create book"
+        return context
+
+
+class BookUpdateForm(UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = "catalog/book_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Update book"
+        return context
+
+
+class BookDeleteView(DeleteView):
+    model = Book
+    template_name = "catalog/book_confirm_delete.html"
+    success_url = reverse_lazy("catalog:book-list")
+
+
+class AboutView(TemplateView):
+    template_name = "catalog/about.html"
 
 
 def book_search(request):

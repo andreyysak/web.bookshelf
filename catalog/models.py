@@ -89,11 +89,11 @@ class Book(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-created_at"]  # noqa: RUF012
         verbose_name = "Book"
         verbose_name_plural = "Books"
-        indexes = [models.Index(fields=["published_year"])]
-        constraints = [
+        indexes = [models.Index(fields=["published_year"])]  # noqa: RUF012
+        constraints = [  # noqa: RUF012
             models.CheckConstraint(condition=Q(pages__gt=0), name="check_pages")
         ]
 
@@ -107,7 +107,7 @@ class BookGenre(models.Model):
         return f"{self.book.title} {self.genre.name}"
 
     class Meta:
-        constraints = [
+        constraints = [  # noqa: RUF012
             models.UniqueConstraint(fields=["book", "genre"], name="unique_book_genre"),
             models.UniqueConstraint(
                 fields=["book"],
@@ -125,6 +125,6 @@ class Stock(models.Model):
         return f"{self.book.title} - {self.quantity}"
 
     class Meta:
-        constraints = [
+        constraints = [  # noqa: RUF012
             models.CheckConstraint(condition=Q(quantity__gte=0), name="check_quantity")
         ]
