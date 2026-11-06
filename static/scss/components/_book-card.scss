@@ -3,6 +3,7 @@
 .book-card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   gap: $sp-3;
   padding: $sp-5;
   background: $surface;
@@ -47,6 +48,7 @@
   &__description {
     margin: 0;
     font-size: 0.95rem;
+    overflow-wrap: anywhere;
   }
 
   &__snippets {

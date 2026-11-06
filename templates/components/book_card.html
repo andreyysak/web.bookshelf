@@ -1,39 +1,44 @@
+{% load catalog_extras %}
 <article class="book-card">
   <div class="book-card__badges">
-    {% if new %}<span class="badge badge--new">New</span>{% endif %}
-    <span class="badge">{{ format|default:"Paper" }}</span>
+    {% if book.is_new %}<span class="badge badge--new">New</span>{% endif %}
+    <span class="badge">{{ book.get_format_display }}</span>
   </div>
   <h2 class="book-card__title">
-    <a href="#" class="book-card__link">{{ title|default:"The Lantern Keeper" }}</a>
+    <a href="{{ book.get_absolute_url }}" class="book-card__link">{{ book.title }}</a>
   </h2>
-  <p class="book-card__author">
-    by <a href="#" class="book-card__author-link">{{ author|default:"Mara Ellison" }}</a>
-  </p>
+  {% if book.author %}
+    <p class="book-card__author">
+      by <span class="book-card__author-link">{{ book.author.name }}</span>
+    </p>
+  {% endif %}
   <p class="book-card__meta">
-    <a href="#" class="book-card__date">12 March 2024</a>
-    <span>312 pages</span>
-    <span>~ 6 hours reading</span>
+    <a href="{% url "catalog:books-by-year" book.published_year.year %}"
+       class="book-card__date">{{ book.published_year|date:"j F Y" }}</a>
+    <span>{{ book.pages }} page{{ book.pages|pluralize }}</span>
+    <span>{{ book.description|reading_time }}</span>
   </p>
-  <p class="book-card__description">
-    A retired lighthouse keeper discovers that the lamp she tended for forty years guides more than ships, and must decide who to let through before the next storm.
-  </p>
-  <ul class="tags">
-    <li><a href="#" class="tag">Fantasy</a></li>
-    <li><a href="#" class="tag">Adventure</a></li>
-  </ul>
-  <div class="book-card__snippets">
-    <blockquote class="snippet">
-      <span class="rating snippet__rating">★★★★★</span>
-      Warm, slow and beautifully written.
-    </blockquote>
-    <blockquote class="snippet">
-      <span class="rating snippet__rating">★★★★<span class="rating__off">★</span></span>
-      I read it in two evenings.
-    </blockquote>
-  </div>
+  <p class="book-card__description">{{ book.description|truncatewords:30 }}</p>
+  {% if book.genres.all %}
+    <ul class="tags">
+      {% for genre in book.genres.all %}
+        <li><a href="{% url "catalog:books-by-genre" genre.slug %}" class="tag">{{ genre }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if book.good_reviews %}
+    <div class="book-card__snippets">
+      {% for review in book.good_reviews|slice:":2" %}
+        <blockquote class="snippet">
+          {% rating review.rating "snippet__rating" %}
+          {{ review.text }}
+        </blockquote>
+      {% endfor %}
+    </div>
+  {% endif %}
   <div class="book-card__footer">
-    <span class="price">{{ price|default:"$18.50" }}</span>
-    {% if out %}
+    <span class="price">${{ book.price }}</span>
+    {% if not book.is_available %}
       <span class="badge badge--out">Out of stock</span>
     {% else %}
       <span class="badge badge--ok">Available</span>

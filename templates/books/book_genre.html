@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load catalog_extras %}
 
 {% block content %}
 <div class="books">
@@ -14,6 +15,6 @@
     </div>
   </div>
 
-  {% include "partials/latest_books.html" %}
+  {% latest_books 3 %}
 </div>
 {% endblock content %}

@@ -1,25 +1,27 @@
 {% extends "base.html" %}
-
+{% load catalog_extras %}
 {% block content %}
-<div class="books">
-  <div class="books__main">
-    <div class="page-head">
-      <h1 class="page-head__title">Books</h1>
-      <p class="page-head__subtitle">34 books in the catalog</p>
+  <div class="books">
+    <div class="books__main">
+      <div class="page-head">
+        <h1 class="page-head__title">Books</h1>
+        <p class="page-head__subtitle">
+          {{ paginator.count }} book{{ paginator.count|pluralize }} in the catalog
+        </p>
+      </div>
+      {% if books %}
+        <div class="books__grid">
+          {% for book in books %}
+            {% include "components/book_card.html" %}
+          {% endfor %}
+        </div>
+        {% if is_paginated %}
+          {% include "partials/pagination.html" %}
+        {% endif %}
+      {% else %}
+        {% include "components/empty.html" %}
+      {% endif %}
     </div>
-
-    <div class="books__grid">
-      {% include "components/book_card.html" with new=True %}
-      {% include "components/book_card.html" with title="Salt and Paper" author="Tomas Reyes" format="Ebook" price="$9.99" out=True %}
-      {% include "components/book_card.html" with title="A Field Guide to Small Hours" author="Ines Okafor" price="$14.00" %}
-      {% include "components/book_card.html" with title="The Cartographer's Daughter" author="Mara Ellison" format="Audio" price="$22.00" %}
-      {% include "components/book_card.html" with title="Winter at Larch Hollow" author="Pavel Novak" price="$16.75" %}
-      {% include "components/book_card.html" with title="Orbit of Quiet Things" author="Ines Okafor" format="Ebook" price="$11.50" new=True out=True %}
-    </div>
-
-    {% include "partials/pagination.html" %}
+    {% latest_books 3 %}
   </div>
-
-  {% include "partials/latest_books.html" %}
-</div>
 {% endblock content %}
