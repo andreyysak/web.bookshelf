@@ -1,19 +1,25 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from catalog.models import Book
 
 from .forms import ReviewForm
 
 
+@require_POST
 def review_create(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.book = book
-            review.save()
-            return redirect(book)
-    else:
-        form = ReviewForm()
-    return render(request, "reviews/review_form.html", {"form": form, "book": book})
+    book = get_object_or_404(Book.objects.select_related("author"), pk=pk)
+    form = ReviewForm(request.POST)
+    if form.is_valid():
+        review = form.save(commit=False)
+        review.book = book
+        review.save()
+        messages.success(request, "Thanks! Your review was added.")
+        return redirect(book)
+    return render(
+        request,
+        "books/book_detail.html",
+        {"book": book, "reviews": book.reviews.all(), "review_form": form},
+        status=400,
+    )

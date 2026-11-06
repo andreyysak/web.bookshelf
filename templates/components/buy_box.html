@@ -1,15 +1,15 @@
 <div class="buy-box">
-  <span class="buy-box__price">$18.50</span>
+  <span class="buy-box__price">${{ price }}</span>
   <span class="buy-box__stock">
     {% if out %}
-      <span class="badge badge--out">Out of stock</span>
+      <span class="badge badge--ok">Available</span>
     {% else %}
-      <span class="badge badge--ok">Available</span> 3 left
+      <span class="badge badge--out">Out of stock</span>
     {% endif %}
   </span>
   {% if out %}
-    <button type="button" class="btn btn--primary btn--lg" disabled>Out of stock</button>
-  {% else %}
     <button type="button" class="btn btn--primary btn--lg">Buy</button>
+  {% else %}
+    <button type="button" class="btn btn--primary btn--lg" disabled>Out of stock</button>
   {% endif %}
 </div>

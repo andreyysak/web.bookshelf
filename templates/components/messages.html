@@ -1,3 +1,7 @@
-<div class="messages">
-  <div class="message message--success">Thanks! Your review was added.</div>
-</div>
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <div class="message message--{{ message.tags|default:'success' }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}

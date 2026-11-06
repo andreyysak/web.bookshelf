@@ -1,7 +1,8 @@
+{% load catalog_extras %}
 <article class="review">
   <div class="review__head">
-    <span class="rating">{{ stars|default:"★★★★★" }}<span class="rating__off">{{ off }}</span></span>
-    <span class="review__date">{{ date|default:"2 October 2026" }}</span>
+    {% rating review.rating %}
+    <span class="review__date">{{ review.created_at }}</span>
   </div>
-  <p class="review__text">{{ text|default:"Warm, slow and beautifully written. I did not want it to end." }}</p>
+  <p class="review__text">{{ review.text }}</p>
 </article>

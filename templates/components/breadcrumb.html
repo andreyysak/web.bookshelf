@@ -1,3 +1,3 @@
 <p class="breadcrumb">
-  <a href="#" class="breadcrumb__link">Books</a> / {{ current|default:"The Lantern Keeper" }}
+  <a href="{% url "catalog:book-list" %}" class="breadcrumb__link">Books</a> / {{ title }}
 </p>

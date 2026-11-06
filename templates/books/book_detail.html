@@ -1,57 +1,76 @@
 {% extends "base.html" %}
 {% load catalog_extras %}
-
 {% block content %}
-<div class="books">
-  <div class="books__main">
-    {% include "components/breadcrumb.html" %}
-    {% include "components/messages.html" %}
-
-    <article class="book-detail">
-      <div class="cover">cover<br>2:3</div>
-      <div class="book-detail__body">
-        <div class="book-detail__badges">
-          <span class="badge badge--new">New</span>
-          <span class="badge">Paper</span>
+  <div class="books">
+    <div class="books__main">
+      {% include "components/breadcrumb.html" with title=book.title %}
+      {% include "components/messages.html" %}
+      <article class="book-detail">
+        <div class="cover">
+          cover
+          <br>
+          2:3
         </div>
-        <h1 class="book-detail__title">The Lantern Keeper</h1>
-        <p class="book-detail__author">by <a href="#">Mara Ellison</a></p>
-        <dl class="facts">
-          <div class="facts__item"><dt class="facts__label">Published</dt><dd class="facts__value"><a href="#">12 March 2024</a></dd></div>
-          <div class="facts__item"><dt class="facts__label">Pages</dt><dd class="facts__value">312</dd></div>
-          <div class="facts__item"><dt class="facts__label">Reading time</dt><dd class="facts__value">~ 6 hours</dd></div>
-          <div class="facts__item"><dt class="facts__label">ISBN</dt><dd class="facts__value">978-0-00-000000-0</dd></div>
-        </dl>
-        <ul class="tags">
-          <li><a href="#" class="tag">Fantasy</a></li>
-          <li><a href="#" class="tag">Adventure</a></li>
-        </ul>
-
-        {# out=True shows the "out of stock" state #}
-        {% include "components/buy_box.html" %}
-
-        <div>
-          <h2>About this book</h2>
-          <p>A retired lighthouse keeper discovers that the lamp she tended for forty years guides more than ships, and must decide who to let through before the next storm.</p>
-          <p>Forty years on the same rock have taught Ada Marlow patience, and very little about people. When a boat appears that is not on any chart, she opens the logbook her predecessor left behind and finds her own name in it, written decades before she arrived.</p>
-          <p>A quiet, atmospheric novel about duty, weather, and the kindness of strangers.</p>
+        <div class="book-detail__body">
+          <div class="book-detail__badges">
+            {% if book.is_new %}<span class="badge badge--new">New</span>{% endif %}
+            <span class="badge">{{ book.format }}</span>
+          </div>
+          <h1 class="book-detail__title">{{ book.title }}</h1>
+          <p class="book-detail__author">by <a href="#">{{ book.author.name }}</a></p>
+          <dl class="facts">
+            <div class="facts__item">
+              <dt class="facts__label">Published</dt>
+              <dd class="facts__value">
+                <a href="#">{{ book.published_year }}</a>
+              </dd>
+            </div>
+            <div class="facts__item">
+              <dt class="facts__label">Pages</dt>
+              <dd class="facts__value">
+                {{ book.pages }}
+              </dd>
+            </div>
+            <div class="facts__item">
+              <dt class="facts__label">Reading time</dt>
+              <dd class="facts__value">
+                {{ book.description|reading_time }}
+              </dd>
+            </div>
+            <div class="facts__item">
+              <dt class="facts__label">ISBN</dt>
+              <dd class="facts__value">
+                {{ book.isbn }}
+              </dd>
+            </div>
+          </dl>
+          {% if book.genres.all %}
+            <ul class="tags">
+              {% for genre in book.genres.all %}
+                <li><a href="#" class="tag">{{ genre.name }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% include "components/buy_box.html" with out=book.is_available price=book.price %}
+          <div>
+            <h2>About this book</h2>
+            {{ book.description }}
+          </div>
         </div>
-      </div>
-    </article>
-
-    <section class="section">
-      <h2>Reviews (3)</h2>
-      {% include "components/review.html" %}
-      {% include "components/review.html" with stars="★★★★" off="★" date="14 September 2026" text="I read it in two evenings. The middle drags a little, the ending is worth it." %}
-      {% include "components/review.html" with stars="★★★" off="★★" date="30 August 2026" text="Lovely prose, thin plot." %}
-    </section>
-
-    <section class="section">
-      <h2>Add a review</h2>
-      {% include "components/review_form.html" %}
-    </section>
+      </article>
+      {% if reviews %}
+        <section class="section">
+          <h2>Reviews ({{ reviews|length }})</h2>
+          {% for review in reviews %}
+            {% include "components/review.html" with review=review %}
+          {% endfor %}
+        </section>
+      {% endif %}
+      <section class="section">
+        <h2>Add a review</h2>
+        {% include "components/review_form.html" with form=review_form %}
+      </section>
+    </div>
+    {% latest_books 3 %}
   </div>
-
-  {% latest_books 3 %}
-</div>
 {% endblock content %}
