@@ -5,13 +5,21 @@
         Book<span>shelf</span>
       </a>
       <nav class="header__links">
-        <a href="#" class="header__links-item">Books</a>
-        <a href="#" class="header__links-item">Stats</a>
+        <a href="{% url "catalog:book-list" %}"
+           class="header__links-item {% if request.resolver_match.view_name == 'catalog:book-list' %}header__links-item--active{% endif %}">Books</a>
+        <a href="{% url "catalog:author-stats" %}"
+           class="header__links-item {% if request.resolver_match.view_name == 'catalog:author-stats' %}header__links-item--active{% endif %}">Stats</a>
       </nav>
     </div>
-    <div class="header__end">
-      <input type="text" placeholder="Title, author or ISBN" class="header__input">
-      <button type="button" class="header__cta">Search</button>
-    </div>
+    <form method="get"
+          action="{% url "catalog:book-search" %}"
+          class="header__end">
+      <input name="q"
+             value="{{ request.GET.q }}"
+             type="search"
+             placeholder="Title, author or ISBN"
+             class="header__input">
+      <button type="submit" class="header__cta">Search</button>
+    </form>
   </div>
 </header>
