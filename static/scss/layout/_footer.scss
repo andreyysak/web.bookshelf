@@ -1,0 +1,12 @@
+@use "../abstracts/variables" as *;
+
+.footer {
+  padding: $sp-5 $sp-4;
+  border-top: 1px solid $line;
+  text-align: center;
+
+  &__copyright {
+    font-size: $fs-sm;
+    color: $muted;
+  }
+}

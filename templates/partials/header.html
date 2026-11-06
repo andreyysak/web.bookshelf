@@ -1,0 +1,17 @@
+<header class="header">
+  <div class="header__wrap">
+    <div class="header__start">
+      <a href="{% url "catalog:book-list" %}" class="header__logo">
+        Book<span>shelf</span>
+      </a>
+      <nav class="header__links">
+        <a href="#" class="header__links-item">Books</a>
+        <a href="#" class="header__links-item">Stats</a>
+      </nav>
+    </div>
+    <div class="header__end">
+      <input type="text" placeholder="Title, author or ISBN" class="header__input">
+      <button type="button" class="header__cta">Search</button>
+    </div>
+  </div>
+</header>

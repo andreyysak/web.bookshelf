@@ -24,7 +24,7 @@ from .models import Author, Book, Genre
 
 class BookListView(ListView):
     model = Book
-    template_name = "catalog/book_list.html"
+    template_name = "books/book_list.html"
     paginate_by = 10
     context_object_name = "books"
 
@@ -63,7 +63,7 @@ class BookListView(ListView):
 
 class BookDetailView(DetailView):
     model = Book
-    template_name = "catalog/book_detail.html"
+    template_name = "books/book_detail.html"
     context_object_name = "book"
 
     def get_queryset(self):
@@ -80,7 +80,7 @@ class BookDetailView(DetailView):
 class BookCreateView(CreateView):
     model = Book
     form_class = BookForm
-    template_name = "catalog/book_form.html"
+    template_name = "books/book_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -91,7 +91,7 @@ class BookCreateView(CreateView):
 class BookUpdateForm(UpdateView):
     model = Book
     form_class = BookForm
-    template_name = "catalog/book_form.html"
+    template_name = "books/book_form.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,7 +101,7 @@ class BookUpdateForm(UpdateView):
 
 class BookDeleteView(DeleteView):
     model = Book
-    template_name = "catalog/book_confirm_delete.html"
+    template_name = "books/book_confirm_delete.html"
     success_url = reverse_lazy("catalog:book-list")
 
 
@@ -139,7 +139,7 @@ def book_search(request):
             books = books.filter(price__lte=to_price)
 
     context = {"books": books, "form": form}
-    return render(request, "catalog/search_list.html", context)
+    return render(request, "books/search_list.html", context)
 
 
 def book_create(request):
@@ -153,9 +153,7 @@ def book_create(request):
     else:
         form = BookForm()
 
-    return render(
-        request, "catalog/book_form.html", {"form": form, "title": "New book"}
-    )
+    return render(request, "books/book_form.html", {"form": form, "title": "New book"})
 
 
 def book_update(request, pk):
@@ -170,7 +168,7 @@ def book_update(request, pk):
 
     return render(
         request,
-        "catalog/book_form.html",
+        "books/book_form.html",
         {"form": form, "title": f"Edit: {book.title}"},
     )
 
@@ -186,7 +184,7 @@ def author_stats(request):
 
     return render(
         request,
-        "catalog/author_stats.html",
+        "books/author_stats.html",
         {"stats": stats, "book_stats": book_stats, "top_genres": top_genres},
     )
 

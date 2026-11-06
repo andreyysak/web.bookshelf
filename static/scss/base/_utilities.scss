@@ -1,0 +1,6 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+.muted { color: v.$muted; }
+.small { font-size: v.$fs-sm; }
+.visually-hidden { @include m.visually-hidden; }

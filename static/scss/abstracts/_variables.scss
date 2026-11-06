@@ -1,0 +1,63 @@
+// Дизайн-система Bookshelf (тільки світла тема).
+// Єдине джерело правди: у компонентах не пиши сирі кольори/відступи/розміри,
+// бери тільки змінні звідси:  @use "../abstracts/variables" as v;  →  v.$accent
+
+// ---------- Кольори ----------
+$bg:          oklch(0.965 0.014 85);   // фон сторінки
+$surface:     oklch(0.985 0.008 85);   // картки, інпути, хедер
+$surface-2:   oklch(0.935 0.018 82);   // hover, відгуки, disabled
+$ink:         oklch(0.28 0.02 60);     // основний текст
+$muted:       oklch(0.48 0.02 60);     // другорядний текст
+$line:        oklch(0.88 0.016 80);    // рамки, роздільники
+
+$accent:      oklch(0.5 0.1 40);       // кнопка, лого, посилання
+$accent-ink:  oklch(0.985 0.008 85);   // текст на accent
+$accent-soft: oklch(0.925 0.035 55);   // фон тега жанру
+
+$star:        oklch(0.7 0.14 75);      // рейтинг
+$ok:          oklch(0.42 0.09 150);    // успіх / Available
+$ok-soft:     oklch(0.93 0.04 150);
+$err:         oklch(0.47 0.14 28);     // помилка / Out of stock
+$err-soft:    oklch(0.94 0.03 28);
+
+// ---------- Шрифти ----------
+$font-serif: "Lora", Georgia, "Times New Roman", serif;
+$font-sans:  system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$font-mono:  ui-monospace, Menlo, Consolas, monospace;
+
+$fs-sm:   0.875rem;
+$fs-base: 1rem;
+$fs-lg:   1.25rem;
+$fs-h3:   1.25rem;
+$fs-h2:   1.625rem;
+$fs-h1:   2.25rem;
+
+$lh-base:    1.6;
+$lh-heading: 1.25;
+
+// ---------- Відступи ----------
+$sp-1: 0.25rem;
+$sp-2: 0.5rem;
+$sp-3: 0.75rem;
+$sp-4: 1rem;
+$sp-5: 1.5rem;
+$sp-6: 2rem;
+$sp-7: 3rem;
+$sp-8: 4.5rem;
+
+// ---------- Форма ----------
+$radius:    8px;
+$radius-sm: 4px;
+$radius-pill: 999px;
+$shadow: 0 1px 2px oklch(0.3 0.03 60 / 0.06),
+         0 4px 14px oklch(0.3 0.03 60 / 0.05);
+
+// ---------- Layout ----------
+$maxw: 72rem;         // ширина контейнера
+$sidebar-w: 16rem;    // ширина сайдбара "Latest books"
+
+// ---------- Breakpoints (max-width, як у макеті) ----------
+$breakpoints: (
+  "sm": 640px,   // телефон
+  "md": 880px,   // сайдбар падає під контент
+);

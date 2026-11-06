@@ -1,41 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Bookshelf{% endblock %}</title>
-</head>
-<body>
-<main>
-    <aside>
-        {% load catalog_extras %}
-
-        {% latest_books 3 %}
-    </aside>
-
-    <nav>
-        <ul>
-            <li>
-                <a href="{% url 'catalog:book-list' %}">Books</a>
-            </li>
-        </ul>
-    </nav>
-
-    <form action="{% url 'catalog:book-search' %}" method="get">
-        <input type="text" placeholder="Search books..." name="q">
-        <button type="submit">Search</button>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{message}}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    {% block content %}{% endblock %}
-
-    <footer>© 2026 Bookshelf</footer>
-</main>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Bookshelf{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+              rel="stylesheet">
+    </head>
+    <body>
+        {% include "partials/header.html" %}
+        <div class="container"></div>
+        {% include "partials/footer.html" %}
+    </body>
 </html>

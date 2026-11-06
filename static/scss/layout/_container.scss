@@ -1,0 +1,20 @@
+@use "../abstracts/variables" as v;
+
+// Sticky footer: body is a column at least as tall as the viewport,
+// the content container grows and pushes the footer down.
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%; // auto side margins would otherwise shrink it inside a flex column
+  max-width: v.$maxw;
+  margin: 0 auto;
+  padding: 0 v.$sp-4;
+}
+
+body > .container {
+  flex: 1 0 auto;
+}

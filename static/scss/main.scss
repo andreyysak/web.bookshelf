@@ -1,0 +1,27 @@
+// Точка входу: тільки @use. Порядок важливий: від загального до конкретного.
+// Компіляція:  sass --watch static/scss/main.scss:static/css/main.css
+
+// abstracts: нічого не виводять у CSS, лише змінні й міксини
+@use "abstracts/variables";
+@use "abstracts/mixins";
+
+// base
+@use "base/reset";
+@use "base/typography";
+@use "base/utilities";
+
+// layout
+@use "layout/container";
+@use "layout/header";
+@use "layout/footer";
+
+// components
+@use "components/button";
+@use "components/form";
+@use "components/message";
+@use "components/book-card";
+@use "components/pagination";
+
+// pages
+@use "pages/book-list";
+@use "pages/book-detail";

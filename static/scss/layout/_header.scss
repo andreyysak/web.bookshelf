@@ -1,0 +1,109 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as m;
+
+.header {
+  background-color: $surface;
+  border-bottom: 1px solid $line;
+
+  &__wrap {
+    min-height: 76px;
+    max-width: 1552px;
+    width: 100%;
+    margin: 0 auto;
+    padding: $sp-3 $sp-4;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $sp-3 $sp-5;
+  }
+
+  &__start {
+    display: flex;
+    align-items: center;
+    gap: $sp-5;
+  }
+
+  &__logo {
+    margin: 0;
+    font-family: $font-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: $ink;
+    text-decoration: none;
+
+    span {
+      color: $accent;
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: $sp-4;
+  }
+
+  &__links-item {
+    padding: $sp-1 0;
+    color: $ink;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+
+    &:hover,
+    &[aria-current="page"] {
+      border-color: $accent;
+    }
+  }
+
+  &__end {
+    display: flex;
+    gap: $sp-2;
+    flex: 1 1 18rem;
+    max-width: 26rem;
+    margin-left: auto;
+
+    @include m.down("sm") {
+      max-width: none;
+      flex-basis: 100%;
+      margin-left: 0;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    min-height: 2.5rem;
+    padding: $sp-2 $sp-3;
+    font: inherit;
+    color: $ink;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: $radius;
+
+    &::placeholder {
+      color: $muted;
+    }
+
+    &:focus {
+      outline: 2px solid $accent;
+      outline-offset: 0;
+      border-color: $accent;
+    }
+  }
+
+  &__cta {
+    min-height: 2.5rem;
+    padding: 0 $sp-4;
+    font: inherit;
+    font-weight: 600;
+    color: $accent-ink;
+    background: $accent;
+    border: 1px solid transparent;
+    border-radius: $radius;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+}

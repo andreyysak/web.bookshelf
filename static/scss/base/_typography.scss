@@ -1,0 +1,40 @@
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+body {
+  font-family: v.$font-sans;
+  font-size: v.$fs-base;
+  line-height: v.$lh-base;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: v.$font-serif;
+  font-weight: 600;
+  line-height: v.$lh-heading;
+  margin: 0 0 v.$sp-3;
+}
+
+h1 { font-size: v.$fs-h1; }
+h2 { font-size: v.$fs-h2; }
+h3 { font-size: v.$fs-h3; }
+
+p {
+  margin: 0 0 v.$sp-3;
+}
+
+a {
+  color: v.$accent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+:focus-visible {
+  @include m.focus-ring;
+}

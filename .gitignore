@@ -164,3 +164,9 @@ cython_debug/
 
 # media
 .media/
+# node / static build
+node_modules/
+staticfiles/
+
+# editor
+.vscode/
