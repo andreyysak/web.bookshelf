@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="books">
+  <div class="books__main">
+    <div class="page-head">
+      <h1 class="page-head__title">Results for “lantern”</h1>
+      <p class="page-head__subtitle">3 books found</p>
+    </div>
+
+    <div class="books__list">
+      {% include "components/book_card_row.html" with new=True %}
+      {% include "components/book_card_row.html" with title="The Cartographer's Daughter" format="Audio" price="$22.00" %}
+      {% include "components/book_card_row.html" with title="Orbit of Quiet Things" author="Ines Okafor" format="Ebook" price="$11.50" new=True out=True bare=True %}
+    </div>
+  </div>
+
+  {% include "partials/latest_books.html" %}
+</div>
+{% endblock content %}

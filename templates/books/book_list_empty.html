@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="books">
+  <div class="books__main">
+    <div class="page-head">
+      <h1 class="page-head__title">Books</h1>
+    </div>
+
+    {% include "components/empty.html" %}
+  </div>
+
+  {% include "partials/latest_books.html" %}
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+
+.review {
+  padding: $sp-4 0;
+  border-top: 1px solid $line;
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $sp-2 $sp-3;
+    margin-bottom: $sp-2;
+  }
+
+  &__date {
+    font-size: $fs-sm;
+    color: $muted;
+  }
+
+  &__text {
+    margin: 0;
+  }
+}

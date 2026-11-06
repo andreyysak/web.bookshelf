@@ -1,1 +1,29 @@
-// .page, .page__layout, .page__header, .sidebar, .empty  →  templates/catalog/book_list.html
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as m;
+
+// Layout shared by the catalog, genre, year, search and detail pages:
+// content on the left, "Latest books" sidebar on the right
+.books {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) $sidebar-w;
+  gap: $sp-6;
+  align-items: start;
+  padding-block: $sp-6 $sp-7;
+
+  @include m.down("md") {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // Cards in a grid (catalog, genre, year)
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+    gap: $sp-5;
+  }
+
+  // Wide row cards (search results)
+  &__list {
+    display: grid;
+    gap: $sp-4;
+  }
+}

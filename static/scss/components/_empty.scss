@@ -1,0 +1,17 @@
+@use "../abstracts/variables" as *;
+
+.empty {
+  padding: $sp-7 $sp-4;
+  text-align: center;
+  background: $surface;
+  border: 1px dashed $line;
+  border-radius: $radius;
+
+  &__title {
+    margin-bottom: $sp-2;
+  }
+
+  &__text {
+    color: $muted;
+  }
+}

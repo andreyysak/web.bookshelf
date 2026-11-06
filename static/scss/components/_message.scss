@@ -1,2 +1,26 @@
-// .messages, .message, .message--success, .message--error
-// → templates/includes/messages.html
+@use "../abstracts/variables" as *;
+
+.messages {
+  display: grid;
+  gap: $sp-2;
+  margin-bottom: $sp-5;
+}
+
+.message {
+  padding: $sp-3 $sp-4;
+  font-size: $fs-sm;
+  border: 1px solid;
+  border-radius: $radius;
+
+  &--success {
+    color: $ok;
+    background: $ok-soft;
+    border-color: $ok;
+  }
+
+  &--error {
+    color: $err;
+    background: $err-soft;
+    border-color: $err;
+  }
+}

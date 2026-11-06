@@ -139,7 +139,7 @@ def book_search(request):
             books = books.filter(price__lte=to_price)
 
     context = {"books": books, "form": form}
-    return render(request, "books/search_list.html", context)
+    return render(request, "books/book_search.html", context)
 
 
 def book_create(request):

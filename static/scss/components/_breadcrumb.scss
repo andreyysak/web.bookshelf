@@ -1,0 +1,7 @@
+@use "../abstracts/variables" as *;
+
+.breadcrumb {
+  margin-bottom: $sp-4;
+  font-size: $fs-sm;
+  color: $muted;
+}

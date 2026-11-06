@@ -1,0 +1,27 @@
+@use "../abstracts/variables" as *;
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: $sp-3;
+  margin: 0;
+
+  &__item {
+    padding: $sp-3;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: $radius;
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $muted;
+  }
+
+  &__value {
+    margin: 0;
+    font-weight: 600;
+  }
+}

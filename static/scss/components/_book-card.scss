@@ -1,2 +1,109 @@
-// .book-grid, .book-card (+ __badges/__title/__author/__meta/__description/__snippets/__footer),
-// .snippet, .price, .tags, .tag, .badge, .rating  →  templates/includes/book_card.html
+@use "../abstracts/variables" as *;
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-3;
+  padding: $sp-5;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius;
+  box-shadow: $shadow;
+
+  &__badges {
+    display: flex;
+    gap: $sp-2;
+    min-height: 1.5rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $fs-h3;
+  }
+
+  &__link {
+    color: $ink;
+    text-decoration: none;
+
+    &:hover {
+      color: $accent;
+    }
+  }
+
+  &__author {
+    margin: 0;
+    color: $muted;
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $sp-1 $sp-3;
+    margin: 0;
+    font-size: $fs-sm;
+    color: $muted;
+  }
+
+  &__description {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  &__snippets {
+    display: grid;
+    gap: $sp-2;
+  }
+
+  // Footer sticks to the bottom so cards of different height align in the grid
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $sp-3;
+    margin-top: auto;
+    padding-top: $sp-3;
+    border-top: 1px solid $line;
+  }
+}
+
+// Wide variant for search results: info on the left, reviews + price on the right
+.book-card--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: $sp-3 $sp-5;
+
+  .book-card__main {
+    flex: 1 1 18rem;
+    display: grid;
+    gap: $sp-3;
+    align-content: start;
+  }
+
+  .book-card__side {
+    flex: 1 1 16rem;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-3;
+  }
+}
+
+// Short review excerpt inside the card
+.snippet {
+  margin: 0;
+  padding: $sp-2 $sp-3;
+  font-size: $fs-sm;
+  background: $surface-2;
+  border-radius: $radius-sm;
+
+  &__rating {
+    display: flex;
+    margin-bottom: 2px;
+    font-size: 0.8rem;
+  }
+}
+
+.price {
+  font-family: $font-serif;
+  font-size: $fs-lg;
+  font-weight: 600;
+}

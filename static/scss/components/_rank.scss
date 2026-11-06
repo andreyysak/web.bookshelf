@@ -1,0 +1,37 @@
+@use "../abstracts/variables" as *;
+
+// Numbered list (top genres)
+.rank {
+  display: grid;
+  gap: $sp-2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: rank;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $sp-3;
+    padding: $sp-3 $sp-4;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: $radius;
+    counter-increment: rank;
+
+    &::before {
+      content: counter(rank);
+      width: 1.5rem;
+      font-family: $font-serif;
+      font-size: $fs-lg;
+      font-weight: 600;
+      color: $accent;
+    }
+  }
+
+  &__count {
+    margin-left: auto;
+    font-size: $fs-sm;
+    color: $muted;
+  }
+}

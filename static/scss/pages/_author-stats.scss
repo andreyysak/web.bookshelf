@@ -1,0 +1,10 @@
+@use "../abstracts/variables" as *;
+
+.stats {
+  padding-block: $sp-6 $sp-7;
+
+  &__content {
+    display: grid;
+    gap: $sp-6;
+  }
+}

@@ -1,2 +1,73 @@
-// .input, .select, .textarea, .form, .form--card, .form__field/__label/__help/__error/__actions
-// → templates/catalog/book_form.html, templates/reviews/review_form.html
+@use "../abstracts/variables" as *;
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: $sp-2 $sp-3;
+  font: inherit;
+  color: $ink;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius;
+
+  &::placeholder {
+    color: $muted;
+  }
+
+  &:focus {
+    outline: 2px solid $accent;
+    outline-offset: 0;
+    border-color: $accent;
+  }
+
+  &.is-invalid {
+    border-color: $err;
+  }
+}
+
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.form {
+  display: grid;
+  gap: $sp-4;
+  max-width: 26rem;
+
+  &--card {
+    padding: $sp-5;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: $radius;
+    box-shadow: $shadow;
+  }
+
+  &__field {
+    display: grid;
+    gap: $sp-1;
+  }
+
+  &__label {
+    font-size: $fs-sm;
+    font-weight: 600;
+  }
+
+  &__help {
+    font-size: $fs-sm;
+    color: $muted;
+  }
+
+  &__error {
+    font-size: $fs-sm;
+    color: $err;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $sp-3;
+  }
+}

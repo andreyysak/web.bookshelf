@@ -1,0 +1,26 @@
+@use "../abstracts/variables" as *;
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: $sp-4;
+}
+
+.tile {
+  padding: $sp-4 $sp-5;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius;
+
+  &__label {
+    font-size: $fs-sm;
+    color: $muted;
+  }
+
+  &__value {
+    font-family: $font-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+}

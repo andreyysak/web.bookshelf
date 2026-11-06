@@ -1,2 +1,41 @@
-// .pagination, .pagination__link, .is-disabled, .pagination__current
-// → templates/includes/pagination.html
+@use "../abstracts/variables" as *;
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: $sp-2;
+  margin-top: $sp-6;
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0 $sp-3;
+    font-size: $fs-sm;
+    color: $ink;
+    text-decoration: none;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: $radius;
+
+    &:hover {
+      color: $accent;
+      border-color: $accent;
+    }
+
+    // Inactive edge button (e.g. "Previous" on the first page): use <span> instead of <a>
+    &--disabled {
+      color: $muted;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+  }
+
+  &__current {
+    padding: 0 $sp-3;
+    font-size: $fs-sm;
+    color: $muted;
+  }
+}

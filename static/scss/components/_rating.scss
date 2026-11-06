@@ -1,0 +1,14 @@
+@use "../abstracts/variables" as *;
+
+.rating {
+  display: inline-flex;
+  line-height: 1;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  color: $star;
+
+  // Empty (unfilled) stars
+  &__off {
+    color: $line;
+  }
+}

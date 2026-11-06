@@ -19,9 +19,25 @@
 @use "components/button";
 @use "components/form";
 @use "components/message";
+@use "components/page-head";
+@use "components/breadcrumb";
+@use "components/section";
+@use "components/tag";
+@use "components/badge";
+@use "components/rating";
 @use "components/book-card";
+@use "components/latest-books";
 @use "components/pagination";
+@use "components/empty";
+@use "components/cover";
+@use "components/facts";
+@use "components/buy-box";
+@use "components/review";
+@use "components/table";
+@use "components/tile";
+@use "components/rank";
 
 // pages
 @use "pages/book-list";
 @use "pages/book-detail";
+@use "pages/author-stats";

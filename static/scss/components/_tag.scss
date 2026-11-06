@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $sp-2;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0 $sp-3;
+  line-height: 1.7rem;
+  font-size: $fs-sm;
+  color: $ink;
+  text-decoration: none;
+  background: $accent-soft;
+  border: 1px solid transparent;
+  border-radius: $radius-pill;
+
+  &:hover {
+    border-color: $accent;
+  }
+}

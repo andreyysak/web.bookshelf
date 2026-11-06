@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="stats">
+  <div class="page-head">
+    <h1 class="page-head__title">Author stats</h1>
+  </div>
+
+  <div class="stats__content">
+    <section>
+      <h2>Authors</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Author</th>
+              <th class="table__num">Books</th>
+              <th class="table__num">Average rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="#">Mara Ellison</a></td><td class="table__num">2</td><td class="table__num">4.3</td></tr>
+            <tr><td><a href="#">Ines Okafor</a></td><td class="table__num">2</td><td class="table__num">4.7</td></tr>
+            <tr><td><a href="#">Tomas Reyes</a></td><td class="table__num">2</td><td class="table__num">4.0</td></tr>
+            <tr><td><a href="#">Pavel Novak</a></td><td class="table__num">1</td><td class="table__num">5.0</td></tr>
+            <tr><td><a href="#">Lucia Ferrante</a></td><td class="table__num">1</td><td class="table__num">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Summary</h2>
+      <div class="tiles">
+        <div class="tile"><div class="tile__label">Average price</div><div class="tile__value">$17.05</div></div>
+        <div class="tile"><div class="tile__label">Fewest pages</div><div class="tile__value">156</div></div>
+        <div class="tile"><div class="tile__label">Most pages</div><div class="tile__value">402</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Top genres</h2>
+      <ol class="rank">
+        <li class="rank__item"><a href="#">Fantasy</a><span class="rank__count">9 books</span></li>
+        <li class="rank__item"><a href="#">Literary fiction</a><span class="rank__count">7 books</span></li>
+        <li class="rank__item"><a href="#">Mystery</a><span class="rank__count">5 books</span></li>
+      </ol>
+    </section>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,39 @@
+@use "../abstracts/variables" as *;
+
+.latest-books {
+  padding: $sp-4 $sp-5;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius;
+
+  &__title {
+    margin-bottom: $sp-3;
+    font-size: $fs-base;
+  }
+
+  &__item {
+    padding: $sp-2 0;
+    font-family: $font-serif;
+    border-top: 1px solid $line;
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  &__link {
+    color: $ink;
+    text-decoration: none;
+
+    &:hover {
+      color: $accent;
+    }
+  }
+
+  &__author {
+    display: block;
+    font-family: $font-sans;
+    font-size: $fs-sm;
+    color: $muted;
+  }
+}

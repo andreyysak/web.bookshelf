@@ -1,0 +1,32 @@
+@use "../abstracts/variables" as *;
+
+.badge {
+  display: inline-block;
+  padding: 0 $sp-2;
+  line-height: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $muted;
+  border: 1px solid $line;
+  border-radius: $radius-sm;
+
+  &--new {
+    color: $accent-ink;
+    background: $accent;
+    border-color: $accent;
+  }
+
+  &--ok {
+    color: $ok;
+    background: $ok-soft;
+    border-color: $ok;
+  }
+
+  &--out {
+    color: $err;
+    background: $err-soft;
+    border-color: $err;
+  }
+}

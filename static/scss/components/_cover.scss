@@ -1,0 +1,16 @@
+@use "../abstracts/variables" as *;
+
+// Cover placeholder (shown when a book has no image)
+.cover {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2 / 3;
+  padding: $sp-4;
+  font-family: $font-mono;
+  font-size: $fs-sm;
+  text-align: center;
+  color: $muted;
+  background: repeating-linear-gradient(135deg, $surface-2 0 10px, $surface 10px 20px);
+  border: 1px solid $line;
+  border-radius: $radius;
+}

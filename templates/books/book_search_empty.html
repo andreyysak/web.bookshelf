@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="books">
+  <div class="books__main">
+    <div class="page-head">
+      <h1 class="page-head__title">Results for “zzzz”</h1>
+    </div>
+
+    {% include "components/empty.html" with title="Nothing found" text="Check the spelling, or try a title, an author or an ISBN." button="Browse all books" secondary=True %}
+  </div>
+
+  {% include "partials/latest_books.html" %}
+</div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+<article class="book-card">
+  <div class="book-card__badges">
+    {% if new %}<span class="badge badge--new">New</span>{% endif %}
+    <span class="badge">{{ format|default:"Paper" }}</span>
+  </div>
+  <h2 class="book-card__title">
+    <a href="#" class="book-card__link">{{ title|default:"The Lantern Keeper" }}</a>
+  </h2>
+  <p class="book-card__author">
+    by <a href="#" class="book-card__author-link">{{ author|default:"Mara Ellison" }}</a>
+  </p>
+  <p class="book-card__meta">
+    <a href="#" class="book-card__date">12 March 2024</a>
+    <span>312 pages</span>
+    <span>~ 6 hours reading</span>
+  </p>
+  <p class="book-card__description">
+    A retired lighthouse keeper discovers that the lamp she tended for forty years guides more than ships, and must decide who to let through before the next storm.
+  </p>
+  <ul class="tags">
+    <li><a href="#" class="tag">Fantasy</a></li>
+    <li><a href="#" class="tag">Adventure</a></li>
+  </ul>
+  <div class="book-card__snippets">
+    <blockquote class="snippet">
+      <span class="rating snippet__rating">★★★★★</span>
+      Warm, slow and beautifully written.
+    </blockquote>
+    <blockquote class="snippet">
+      <span class="rating snippet__rating">★★★★<span class="rating__off">★</span></span>
+      I read it in two evenings.
+    </blockquote>
+  </div>
+  <div class="book-card__footer">
+    <span class="price">{{ price|default:"$18.50" }}</span>
+    {% if out %}
+      <span class="badge badge--out">Out of stock</span>
+    {% else %}
+      <span class="badge badge--ok">Available</span>
+    {% endif %}
+  </div>
+</article>

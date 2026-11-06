@@ -1,1 +1,51 @@
-// .btn, .btn--primary, .btn--secondary, .btn--lg, disabled
+@use "../abstracts/variables" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $sp-2;
+  min-height: 2.5rem;
+  padding: 0 $sp-4;
+  font-family: $font-sans;
+  font-size: $fs-base;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: $radius;
+  cursor: pointer;
+
+  &--primary {
+    color: $accent-ink;
+    background: $accent;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+
+  &--secondary {
+    color: $ink;
+    background: transparent;
+    border-color: $line;
+
+    &:hover {
+      background: $surface-2;
+    }
+  }
+
+  &--lg {
+    min-height: 3rem;
+    padding: 0 $sp-5;
+  }
+
+  // Must stay last: overrides the variants above
+  &[disabled],
+  &.is-disabled {
+    color: $muted;
+    background: $surface-2;
+    border-color: $line;
+    cursor: not-allowed;
+    filter: none;
+  }
+}
