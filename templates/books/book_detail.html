@@ -57,6 +57,15 @@
             </ul>
           {% endif %}
           {% include "components/buy_box.html" with out=book.is_available price=book.price %}
+          {% if user.is_authenticated %}
+            <div class="book-detail__actions">
+              {% if perms.catalog.can_feature_book %}
+                <button type="button" class="btn btn--primary">Feature on home</button>
+              {% endif %}
+              <a href="{% url "catalog:book-edit" book.pk %}" class="btn btn--secondary">Edit</a>
+              <a href="{% url "catalog:book-delete" book.pk %}" class="btn btn--danger">Delete</a>
+            </div>
+          {% endif %}
           <div>
             <h2>About this book</h2>
             {{ book.description }}
@@ -73,7 +82,14 @@
       {% endif %}
       <section class="section">
         <h2>Add a review</h2>
-        {% include "components/review_form.html" with form=review_form %}
+        {% if user.is_authenticated %}
+          {% include "components/review_form.html" with form=review_form %}
+        {% else %}
+          <p>
+            <a href="{% url "login" %}?next={{ request.path|urlencode }}">Log in</a>
+            or <a href="{% url "account:register" %}">register</a> to write a review.
+          </p>
+        {% endif %}
       </section>
     </div>
     {% latest_books 3 %}

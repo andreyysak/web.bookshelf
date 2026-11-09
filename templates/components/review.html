@@ -2,7 +2,11 @@
 <article class="review">
   <div class="review__head">
     {% rating review.rating %}
+    <span class="review__author">{{ review.user.username|default:"Anonymous" }}</span>
     <span class="review__date">{{ review.created_at }}</span>
+    {% if review.user == user or perms.reviews.delete_review %}
+      <a href="{% url "reviews:review-delete" review.pk %}" class="review__delete">Delete</a>
+    {% endif %}
   </div>
   <p class="review__text">{{ review.text }}</p>
 </article>

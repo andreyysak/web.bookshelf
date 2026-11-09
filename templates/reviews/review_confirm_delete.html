@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Delete review · Bookshelf{% endblock %}
+{% block content %}
+  <div class="page-head">
+    <h1 class="page-head__title">Delete review</h1>
+  </div>
+  <form method="post" class="form form--card">
+    {% csrf_token %}
+    <p>Delete this review of <strong>{{ object.book.title }}</strong>? This cannot be undone.</p>
+    <blockquote class="snippet">{{ object.text|truncatewords:30 }}</blockquote>
+    <div class="form__actions">
+      <button type="submit" class="btn btn--danger">Delete</button>
+      <a href="{{ object.book.get_absolute_url }}" class="btn btn--secondary">Cancel</a>
+    </div>
+  </form>
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Create account · Bookshelf{% endblock %}
+{% block content %}
+  <div class="auth">
+    <div class="auth__card">
+      <div class="auth__head">
+        <h1 class="auth__title">Create account</h1>
+        <p class="auth__subtitle">Join Bookshelf to add books and write reviews.</p>
+      </div>
+      <form method="post" class="auth__form" novalidate>
+        {% csrf_token %}
+        {% include "registration/_fields.html" %}
+        <button type="submit" class="btn btn--primary btn--lg auth__submit">Create account</button>
+      </form>
+      <p class="auth__footer">
+        Already have an account? <a href="{% url "login" %}">Log in</a>
+      </p>
+    </div>
+  </div>
+{% endblock content %}

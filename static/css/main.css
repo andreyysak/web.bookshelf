@@ -193,6 +193,82 @@ body > .container {
 .header__cta:hover {
   filter: brightness(1.1);
 }
+.header__auth {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-left: 1rem;
+  border-left: 1px solid oklch(88% 0.016 80deg);
+}
+@media (max-width: 640px) {
+  .header__auth {
+    margin-left: auto;
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+.header__user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: oklch(28% 0.02 60deg);
+}
+.header__avatar {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: oklch(98.5% 0.008 85deg);
+  background: oklch(50% 0.1 40deg);
+  border-radius: 50%;
+}
+.header__username {
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .header__username {
+    display: none;
+  }
+}
+.header__logout {
+  margin: 0;
+}
+.header__btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: oklch(28% 0.02 60deg);
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid oklch(88% 0.016 80deg);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.header__btn:hover {
+  background: oklch(93.5% 0.018 82deg);
+}
+.header__btn:focus-visible {
+  outline: 2px solid oklch(50% 0.1 40deg);
+  outline-offset: 2px;
+}
+.header__btn--primary {
+  color: oklch(98.5% 0.008 85deg);
+  background: oklch(50% 0.1 40deg);
+  border-color: transparent;
+}
+.header__btn--primary:hover {
+  background: oklch(50% 0.1 40deg);
+  filter: brightness(1.1);
+}
 
 .footer {
   padding: 1.5rem 1rem;
@@ -233,6 +309,15 @@ body > .container {
 }
 .btn--secondary:hover {
   background: oklch(93.5% 0.018 82deg);
+}
+.btn--danger {
+  color: oklch(47% 0.14 28deg);
+  background: transparent;
+  border-color: oklch(47% 0.14 28deg);
+}
+.btn--danger:hover {
+  color: oklch(98.5% 0.008 85deg);
+  background: oklch(47% 0.14 28deg);
 }
 .btn--lg {
   min-height: 3rem;
@@ -676,6 +761,14 @@ body > .container {
   gap: 0.5rem 0.75rem;
   margin-bottom: 0.5rem;
 }
+.review__author {
+  font-weight: 600;
+}
+.review__delete {
+  margin-left: auto;
+  font-size: 0.875rem;
+  color: oklch(47% 0.14 28deg);
+}
 .review__date {
   font-size: 0.875rem;
   color: oklch(48% 0.02 60deg);
@@ -820,6 +913,11 @@ body > .container {
   margin: 0;
   font-size: 2rem;
 }
+.book-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 .book-detail__author {
   margin: 0;
   color: oklch(48% 0.02 60deg);
@@ -831,6 +929,96 @@ body > .container {
 .stats__content {
   display: grid;
   gap: 2rem;
+}
+
+.auth {
+  display: grid;
+  place-items: start center;
+  padding: 3rem 0;
+}
+.auth__card {
+  width: 100%;
+  max-width: 26rem;
+  padding: 2rem;
+  background: oklch(98.5% 0.008 85deg);
+  border: 1px solid oklch(88% 0.016 80deg);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px oklch(30% 0.03 60deg / 0.06), 0 4px 14px oklch(30% 0.03 60deg / 0.05);
+}
+.auth__head {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.auth__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.625rem;
+}
+.auth__subtitle {
+  margin: 0;
+  color: oklch(48% 0.02 60deg);
+}
+.auth__form {
+  display: grid;
+  gap: 1rem;
+}
+.auth__form label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.auth__form input[type=text],
+.auth__form input[type=email],
+.auth__form input[type=password] {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: oklch(28% 0.02 60deg);
+  background: oklch(98.5% 0.008 85deg);
+  border: 1px solid oklch(88% 0.016 80deg);
+  border-radius: 8px;
+}
+.auth__form input[type=text]::placeholder,
+.auth__form input[type=email]::placeholder,
+.auth__form input[type=password]::placeholder {
+  color: oklch(48% 0.02 60deg);
+}
+.auth__form input[type=text]:focus,
+.auth__form input[type=email]:focus,
+.auth__form input[type=password]:focus {
+  outline: 2px solid oklch(50% 0.1 40deg);
+  outline-offset: 0;
+  border-color: oklch(50% 0.1 40deg);
+}
+.auth__form .errorlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: oklch(47% 0.14 28deg);
+}
+.auth__submit {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.auth__footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  text-align: center;
+  color: oklch(48% 0.02 60deg);
+}
+
+.auth__help {
+  font-size: 0.875rem;
+  color: oklch(48% 0.02 60deg);
+}
+.auth__help ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.auth__card > .btn {
+  display: flex;
+  width: 100%;
 }
 
 /*# sourceMappingURL=main.css.map */

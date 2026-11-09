@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Q
@@ -12,6 +13,13 @@ class Review(models.Model):
     )
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="reviews",
+    )
 
     def __str__(self):
         return f"{self.book} — {self.rating}/5"

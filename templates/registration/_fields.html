@@ -1,0 +1,13 @@
+{% if form.non_field_errors %}
+  <div class="message message--error">
+    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+  </div>
+{% endif %}
+{% for field in form %}
+  <div class="form__field">
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.help_text %}<div class="auth__help">{{ field.help_text|safe }}</div>{% endif %}
+    {% for error in field.errors %}<div class="form__error">{{ error }}</div>{% endfor %}
+  </div>
+{% endfor %}

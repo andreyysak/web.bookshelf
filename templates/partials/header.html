@@ -9,6 +9,10 @@
            class="header__links-item {% if request.resolver_match.view_name == 'catalog:book-list' %}header__links-item--active{% endif %}">Books</a>
         <a href="{% url "catalog:author-stats" %}"
            class="header__links-item {% if request.resolver_match.view_name == 'catalog:author-stats' %}header__links-item--active{% endif %}">Stats</a>
+        {% if user.is_authenticated %}
+          <a href="{% url "catalog:book-create" %}"
+             class="header__links-item {% if request.resolver_match.view_name == 'catalog:book-create' %}header__links-item--active{% endif %}">Add book</a>
+        {% endif %}
       </nav>
     </div>
     <form method="get"
@@ -21,5 +25,20 @@
              class="header__input">
       <button type="submit" class="header__cta">Search</button>
     </form>
+    <div class="header__auth">
+      {% if user.is_authenticated %}
+        <span class="header__user">
+          <span class="header__avatar" aria-hidden="true">{{ user.username|first|upper }}</span>
+          <span class="header__username">{{ user.username }}</span>
+        </span>
+        <form method="post" action="{% url "logout" %}" class="header__logout">
+          {% csrf_token %}
+          <button type="submit" class="header__btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="{% url "login" %}?next={{ request.path|urlencode }}" class="header__btn">Login</a>
+        <a href="{% url "account:register" %}" class="header__btn header__btn--primary">Register</a>
+      {% endif %}
+    </div>
   </div>
 </header>

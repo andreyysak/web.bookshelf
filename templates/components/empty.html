@@ -2,5 +2,7 @@
 <div class="empty">
   <h2 class="empty__title">{{ title|default:"No books yet" }}</h2>
   <p class="empty__text">{{ text|default:"The catalog is empty. Add the first book to get started." }}</p>
+  {% if href or user.is_authenticated %}
   <a href="{{ href|default:create_url }}" class="btn {% if secondary %}btn--secondary{% else %}btn--primary{% endif %}">{{ button|default:"Add a book" }}</a>
+  {% endif %}
 </div>

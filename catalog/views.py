@@ -1,9 +1,10 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Prefetch, Q
 from django.db.models.aggregates import Avg, Count, Max, Min
 from django.http import Http404, HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 from django.views.generic import (
@@ -72,12 +73,12 @@ class BookDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         book = context["book"]
-        context["reviews"] = book.reviews.all()
+        context["reviews"] = book.reviews.select_related("user")
         context["review_form"] = ReviewForm()
         return context
 
 
-class BookCreateView(CreateView):
+class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
     form_class = BookForm
     template_name = "books/book_form.html"
@@ -88,7 +89,7 @@ class BookCreateView(CreateView):
         return context
 
 
-class BookUpdateForm(UpdateView):
+class BookUpdateForm(LoginRequiredMixin, UpdateView):
     model = Book
     form_class = BookForm
     template_name = "books/book_form.html"
@@ -99,7 +100,7 @@ class BookUpdateForm(UpdateView):
         return context
 
 
-class BookDeleteView(DeleteView):
+class BookDeleteView(LoginRequiredMixin, DeleteView):
     model = Book
     template_name = "books/book_confirm_delete.html"
     success_url = reverse_lazy("catalog:book-list")
@@ -153,37 +154,6 @@ def book_search(request):
     return render(request, "books/book_search.html", context)
 
 
-def book_create(request):
-    if request.method == "POST":
-        form = BookForm(request.POST)
-        if form.is_valid():
-            book = form.save(commit=False)
-            book.save()
-            form.save_m2m()
-            return redirect(book)
-    else:
-        form = BookForm()
-
-    return render(request, "books/book_form.html", {"form": form, "title": "New book"})
-
-
-def book_update(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-    if request.method == "POST":
-        form = BookForm(request.POST, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect(book)
-    else:
-        form = BookForm(instance=book)
-
-    return render(
-        request,
-        "books/book_form.html",
-        {"form": form, "title": f"Edit: {book.title}"},
-    )
-
-
 def author_stats(request):
     stats = Author.objects.annotate(
         total=Count("books", distinct=True), avg=Avg("books__reviews__rating")
@@ -200,10 +170,6 @@ def author_stats(request):
     )
 
 
-def book_detail(request, pk):
-    return HttpResponse(f"Details of book: {pk}")
-
-
 def books_by_genre(request, slug):
     genre = get_object_or_404(Genre, slug=slug)
     books = (
@@ -218,9 +184,7 @@ def books_by_genre(request, slug):
             ),
         )
     )
-    return render(
-        request, "books/book_genre.html", {"genre": genre, "books": books}
-    )
+    return render(request, "books/book_genre.html", {"genre": genre, "books": books})
 
 
 def books_by_year(request, year):

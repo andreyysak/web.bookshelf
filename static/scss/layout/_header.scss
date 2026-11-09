@@ -106,4 +106,88 @@
       filter: brightness(1.1);
     }
   }
+
+  &__auth {
+    display: flex;
+    align-items: center;
+    gap: $sp-3;
+    padding-left: $sp-4;
+    border-left: 1px solid $line;
+
+    @include m.down("sm") {
+      margin-left: auto;
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: $sp-2;
+    font-weight: 600;
+    color: $ink;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: $fs-sm;
+    font-weight: 700;
+    color: $accent-ink;
+    background: $accent;
+    border-radius: 50%;
+  }
+
+  &__username {
+    max-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include m.down("sm") {
+      display: none;
+    }
+  }
+
+  &__logout {
+    margin: 0;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: 0 $sp-4;
+    font: inherit;
+    font-weight: 600;
+    color: $ink;
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid $line;
+    border-radius: $radius;
+    cursor: pointer;
+
+    &:hover {
+      background: $surface-2;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $accent;
+      outline-offset: 2px;
+    }
+
+    &--primary {
+      color: $accent-ink;
+      background: $accent;
+      border-color: transparent;
+
+      &:hover {
+        background: $accent;
+        filter: brightness(1.1);
+      }
+    }
+  }
 }

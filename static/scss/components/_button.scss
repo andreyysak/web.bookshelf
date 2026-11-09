@@ -34,6 +34,17 @@
     }
   }
 
+  &--danger {
+    color: $err;
+    background: transparent;
+    border-color: $err;
+
+    &:hover {
+      color: $accent-ink;
+      background: $err;
+    }
+  }
+
   &--lg {
     min-height: 3rem;
     padding: 0 $sp-5;

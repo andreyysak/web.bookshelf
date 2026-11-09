@@ -12,6 +12,16 @@
     margin-bottom: $sp-2;
   }
 
+  &__author {
+    font-weight: 600;
+  }
+
+  &__delete {
+    margin-left: auto;
+    font-size: $fs-sm;
+    color: $err;
+  }
+
   &__date {
     font-size: $fs-sm;
     color: $muted;

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Log in · Bookshelf{% endblock %}
+{% block content %}
+  <div class="auth">
+    <div class="auth__card">
+      <div class="auth__head">
+        <h1 class="auth__title">Welcome back</h1>
+        <p class="auth__subtitle">Log in to add books and write reviews.</p>
+      </div>
+      <form method="post" class="auth__form" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="message message--error">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+          </div>
+        {% endif %}
+        {% for field in form %}
+          <div class="form__field">
+            {{ field.label_tag }}
+            {{ field }}
+            {% for error in field.errors %}<div class="form__error">{{ error }}</div>{% endfor %}
+          </div>
+        {% endfor %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="btn btn--primary btn--lg auth__submit">Log in</button>
+      </form>
+      <p class="auth__footer">
+        <a href="{% url "password_reset" %}">Forgot your password?</a>
+      </p>
+      <p class="auth__footer">
+        No account yet? <a href="{% url "account:register" %}">Register</a>
+      </p>
+    </div>
+  </div>
+{% endblock content %}

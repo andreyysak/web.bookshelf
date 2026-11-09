@@ -1,0 +1,101 @@
+@use "../abstracts/variables" as *;
+
+.auth {
+  display: grid;
+  place-items: start center;
+  padding: $sp-7 0;
+
+  &__card {
+    width: 100%;
+    max-width: 26rem;
+    padding: $sp-6;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: $radius;
+    box-shadow: $shadow;
+  }
+
+  &__head {
+    margin-bottom: $sp-5;
+    text-align: center;
+  }
+
+  &__title {
+    margin: 0 0 $sp-2;
+    font-size: $fs-h2;
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: $muted;
+  }
+
+  &__form {
+    display: grid;
+    gap: $sp-4;
+
+    label {
+      font-size: $fs-sm;
+      font-weight: 600;
+    }
+
+    // Django's auth forms render bare widgets, so style them here
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      min-height: 2.75rem;
+      padding: $sp-2 $sp-3;
+      font: inherit;
+      color: $ink;
+      background: $surface;
+      border: 1px solid $line;
+      border-radius: $radius;
+
+      &::placeholder {
+        color: $muted;
+      }
+
+      &:focus {
+        outline: 2px solid $accent;
+        outline-offset: 0;
+        border-color: $accent;
+      }
+    }
+
+    .errorlist {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: $fs-sm;
+      color: $err;
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    margin-top: $sp-2;
+  }
+
+  &__footer {
+    margin: $sp-5 0 0;
+    font-size: $fs-sm;
+    text-align: center;
+    color: $muted;
+  }
+}
+
+.auth__help {
+  font-size: $fs-sm;
+  color: $muted;
+
+  ul {
+    margin: 0;
+    padding-left: $sp-5;
+  }
+}
+
+.auth__card > .btn {
+  display: flex;
+  width: 100%;
+}

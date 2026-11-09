@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "reviews",
     "debug_toolbar",
     "feedback",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "catalog:book-list"
+LOGOUT_REDIRECT_URL = "catalog:book-list"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -96,6 +96,7 @@ class Book(models.Model):
     class Meta:
         ordering = ["-created_at"]  # noqa: RUF012
         verbose_name = "Book"
+        permissions = [("can_feature_book", "Can feature book on the home page")]  # noqa: RUF012
         verbose_name_plural = "Books"
         indexes = [models.Index(fields=["published_year"])]  # noqa: RUF012
         constraints = [  # noqa: RUF012
