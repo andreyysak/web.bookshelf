@@ -13,4 +13,11 @@
   background: repeating-linear-gradient(135deg, $surface-2 0 10px, $surface 10px 20px);
   border: 1px solid $line;
   border-radius: $radius;
+
+  &--image {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    object-fit: cover;
+  }
 }

@@ -5,6 +5,8 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils.text import slugify
 
+from .validators import validate_cover
+
 
 class Author(models.Model):
     name = models.CharField(max_length=200)
@@ -64,6 +66,9 @@ class Book(models.Model):
         max_length=10, choices=Format.choices, default=Format.PAPER
     )
     language = models.CharField(max_length=4, default="en")
+    cover = models.ImageField(
+        upload_to="covers/%Y/", blank=True, validators=[validate_cover]
+    )
     author = models.ForeignKey(
         Author, on_delete=models.SET_NULL, null=True, blank=True, related_name="books"
     )

@@ -163,7 +163,7 @@ cython_debug/
 .idea/
 
 # media
-.media/
+media/
 # node / static build
 node_modules/
 staticfiles/

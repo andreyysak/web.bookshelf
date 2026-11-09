@@ -111,7 +111,14 @@ class AboutView(TemplateView):
 
 def book_search(request):
     form = BookSearchForm(request.GET)
-    books = Book.objects.select_related("author").prefetch_related("genres")
+    books = Book.objects.select_related("author").prefetch_related(
+        "genres",
+        Prefetch(
+            "reviews",
+            queryset=Review.objects.filter(rating__gte=4),
+            to_attr="good_reviews",
+        ),
+    )
 
     if form.is_valid():
         q = form.cleaned_data.get("q")
@@ -138,7 +145,11 @@ def book_search(request):
         if to_price is not None:
             books = books.filter(price__lte=to_price)
 
-    context = {"books": books, "form": form}
+    context = {
+        "books": books,
+        "form": form,
+        "q": request.GET.get("q", ""),
+    }
     return render(request, "books/book_search.html", context)
 
 
@@ -194,11 +205,38 @@ def book_detail(request, pk):
 
 
 def books_by_genre(request, slug):
-    return HttpResponse(f"Books of genre: {slug}")
+    genre = get_object_or_404(Genre, slug=slug)
+    books = (
+        Book.objects.filter(genres=genre)
+        .select_related("author")
+        .prefetch_related(
+            "genres",
+            Prefetch(
+                "reviews",
+                queryset=Review.objects.filter(rating__gte=4),
+                to_attr="good_reviews",
+            ),
+        )
+    )
+    return render(
+        request, "books/book_genre.html", {"genre": genre, "books": books}
+    )
 
 
 def books_by_year(request, year):
-    return HttpResponse(f"Books from: {year}")
+    books = (
+        Book.objects.filter(published_year__year=year)
+        .select_related("author")
+        .prefetch_related(
+            "genres",
+            Prefetch(
+                "reviews",
+                queryset=Review.objects.filter(rating__gte=4),
+                to_attr="good_reviews",
+            ),
+        )
+    )
+    return render(request, "books/book_year.html", {"year": year, "books": books})
 
 
 def book_by_isbn(request, isbn):

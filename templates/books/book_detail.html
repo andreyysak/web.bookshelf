@@ -1,28 +1,33 @@
 {% extends "base.html" %}
 {% load catalog_extras %}
+{% block title %}{{ book.title }} · Bookshelf{% endblock %}
 {% block content %}
   <div class="books">
     <div class="books__main">
       {% include "components/breadcrumb.html" with title=book.title %}
       {% include "components/messages.html" %}
       <article class="book-detail">
-        <div class="cover">
-          cover
-          <br>
-          2:3
-        </div>
+        {% if book.cover %}
+          <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="cover cover--image">
+        {% else %}
+          <div class="cover">No cover</div>
+        {% endif %}
         <div class="book-detail__body">
           <div class="book-detail__badges">
             {% if book.is_new %}<span class="badge badge--new">New</span>{% endif %}
             <span class="badge">{{ book.format }}</span>
           </div>
           <h1 class="book-detail__title">{{ book.title }}</h1>
-          <p class="book-detail__author">by <a href="#">{{ book.author.name }}</a></p>
+          {% if book.author %}
+            <p class="book-detail__author">
+              by <a href="{% url "catalog:book-search" %}?q={{ book.author.name|urlencode }}">{{ book.author.name }}</a>
+            </p>
+          {% endif %}
           <dl class="facts">
             <div class="facts__item">
               <dt class="facts__label">Published</dt>
               <dd class="facts__value">
-                <a href="#">{{ book.published_year }}</a>
+                <a href="{% url "catalog:books-by-year" book.published_year.year %}">{{ book.published_year|date:"j F Y" }}</a>
               </dd>
             </div>
             <div class="facts__item">
@@ -47,7 +52,7 @@
           {% if book.genres.all %}
             <ul class="tags">
               {% for genre in book.genres.all %}
-                <li><a href="#" class="tag">{{ genre.name }}</a></li>
+                <li><a href="{% url "catalog:books-by-genre" genre.slug %}" class="tag">{{ genre.name }}</a></li>
               {% endfor %}
             </ul>
           {% endif %}

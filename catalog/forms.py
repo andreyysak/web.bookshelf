@@ -7,7 +7,22 @@ from django.core.exceptions import ValidationError
 from .models import Book, Genre
 
 
+def _style_fields(form):
+    for field in form.fields.values():
+        widget = field.widget
+        if isinstance(widget, forms.CheckboxInput):
+            continue
+        css = "select" if isinstance(widget, forms.Select) else "input"
+        if isinstance(widget, forms.Textarea):
+            css = "textarea"
+        widget.attrs["class"] = f"{widget.attrs.get('class', '')} {css}".strip()
+
+
 class BookForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _style_fields(self)
+
     def clean_published_year(self):
         pub_year = self.cleaned_data["published_year"]
         now_date = date.today()
@@ -31,9 +46,10 @@ class BookForm(forms.ModelForm):
             "language",
             "author",
             "genres",
+            "cover",
         ]
         widgets = {  # noqa: RUF012
-            "published_year": forms.DateInput(attrs={"type": "date"}),
+            "published_year": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
             "description": forms.Textarea(attrs={"rows": 6}),
         }
 

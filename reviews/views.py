@@ -20,6 +20,6 @@ def review_create(request, pk):
     return render(
         request,
         "books/book_detail.html",
-        {"book": book, "reviews": book.reviews.all(), "review_form": form},
+        {"book": book, "reviews": book.reviews.all(), "review_form": form},  # type: ignore
         status=400,
     )

@@ -1,21 +1,36 @@
 {% extends "base.html" %}
 {% load catalog_extras %}
-
+{% block title %}Search · Bookshelf{% endblock %}
 {% block content %}
-<div class="books">
-  <div class="books__main">
-    <div class="page-head">
-      <h1 class="page-head__title">Results for “lantern”</h1>
-      <p class="page-head__subtitle">3 books found</p>
+  <div class="books">
+    <div class="books__main">
+      <div class="page-head">
+        <h1 class="page-head__title">
+          {% if q %}Results for “{{ q }}”{% else %}Search{% endif %}
+        </h1>
+        {% if books %}
+          <p class="page-head__subtitle">
+            {{ books|length }} book{{ books|length|pluralize }} found
+          </p>
+        {% endif %}
+      </div>
+      {% if form.errors %}
+        {% for field in form %}
+          {% for error in field.errors %}<div class="form__error">{{ field.label }}: {{ error }}</div>{% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}<div class="form__error">{{ error }}</div>{% endfor %}
+      {% endif %}
+      {% if books %}
+        <div class="books__list">
+          {% for book in books %}
+            {% include "components/book_card_row.html" %}
+          {% endfor %}
+        </div>
+      {% else %}
+        {% url "catalog:book-list" as list_url %}
+        {% include "components/empty.html" with title="Nothing found" text="Check the spelling, or try a title, an author or an ISBN." button="Browse all books" href=list_url secondary=True %}
+      {% endif %}
     </div>
-
-    <div class="books__list">
-      {% include "components/book_card_row.html" with new=True %}
-      {% include "components/book_card_row.html" with title="The Cartographer's Daughter" format="Audio" price="$22.00" %}
-      {% include "components/book_card_row.html" with title="Orbit of Quiet Things" author="Ines Okafor" format="Ebook" price="$11.50" new=True out=True bare=True %}
-    </div>
+    {% latest_books 3 %}
   </div>
-
-  {% latest_books 3 %}
-</div>
 {% endblock content %}

@@ -1,5 +1,8 @@
 {% load catalog_extras %}
 <article class="book-card">
+  {% if book.cover %}
+    <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="book-card__cover">
+  {% endif %}
   <div class="book-card__badges">
     {% if book.is_new %}<span class="badge badge--new">New</span>{% endif %}
     <span class="badge">{{ book.get_format_display }}</span>

@@ -430,6 +430,12 @@ body > .container {
   border-radius: 8px;
   box-shadow: 0 1px 2px oklch(30% 0.03 60deg / 0.06), 0 4px 14px oklch(30% 0.03 60deg / 0.05);
 }
+.book-card__cover {
+  width: 100%;
+  max-height: 14rem;
+  object-fit: cover;
+  border-radius: 8px;
+}
 .book-card__badges {
   display: flex;
   gap: 0.5rem;
@@ -607,6 +613,12 @@ body > .container {
   background: repeating-linear-gradient(135deg, oklch(93.5% 0.018 82deg) 0 10px, oklch(98.5% 0.008 85deg) 10px 20px);
   border: 1px solid oklch(88% 0.016 80deg);
   border-radius: 8px;
+}
+.cover--image {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  object-fit: cover;
 }
 
 .facts {

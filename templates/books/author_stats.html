@@ -19,11 +19,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><a href="#">Mara Ellison</a></td><td class="table__num">2</td><td class="table__num">4.3</td></tr>
-            <tr><td><a href="#">Ines Okafor</a></td><td class="table__num">2</td><td class="table__num">4.7</td></tr>
-            <tr><td><a href="#">Tomas Reyes</a></td><td class="table__num">2</td><td class="table__num">4.0</td></tr>
-            <tr><td><a href="#">Pavel Novak</a></td><td class="table__num">1</td><td class="table__num">5.0</td></tr>
-            <tr><td><a href="#">Lucia Ferrante</a></td><td class="table__num">1</td><td class="table__num">—</td></tr>
+            {% for author in stats %}
+              <tr>
+                <td>
+                  <a href="{% url "catalog:book-search" %}?q={{ author.name|urlencode }}">{{ author.name }}</a>
+                </td>
+                <td class="table__num">{{ author.total }}</td>
+                <td class="table__num">{{ author.avg|floatformat:1|default:"—" }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="3">No authors yet</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -32,18 +40,34 @@
     <section>
       <h2>Summary</h2>
       <div class="tiles">
-        <div class="tile"><div class="tile__label">Average price</div><div class="tile__value">$17.05</div></div>
-        <div class="tile"><div class="tile__label">Fewest pages</div><div class="tile__value">156</div></div>
-        <div class="tile"><div class="tile__label">Most pages</div><div class="tile__value">402</div></div>
+        <div class="tile">
+          <div class="tile__label">Average price</div>
+          <div class="tile__value">
+            {% if book_stats.avg_price %}${{ book_stats.avg_price|floatformat:2 }}{% else %}—{% endif %}
+          </div>
+        </div>
+        <div class="tile">
+          <div class="tile__label">Fewest pages</div>
+          <div class="tile__value">{{ book_stats.min_pages|default:"—" }}</div>
+        </div>
+        <div class="tile">
+          <div class="tile__label">Most pages</div>
+          <div class="tile__value">{{ book_stats.max_pages|default:"—" }}</div>
+        </div>
       </div>
     </section>
 
     <section>
       <h2>Top genres</h2>
       <ol class="rank">
-        <li class="rank__item"><a href="#">Fantasy</a><span class="rank__count">9 books</span></li>
-        <li class="rank__item"><a href="#">Literary fiction</a><span class="rank__count">7 books</span></li>
-        <li class="rank__item"><a href="#">Mystery</a><span class="rank__count">5 books</span></li>
+        {% for genre in top_genres %}
+          <li class="rank__item">
+            <a href="{% url "catalog:books-by-genre" genre.slug %}">{{ genre.name }}</a>
+            <span class="rank__count">{{ genre.count }} book{{ genre.count|pluralize }}</span>
+          </li>
+        {% empty %}
+          <li class="rank__item">No genres yet</li>
+        {% endfor %}
       </ol>
     </section>
   </div>

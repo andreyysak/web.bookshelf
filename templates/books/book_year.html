@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 {% load catalog_extras %}
-
+{% block title %}Books from {{ year }} · Bookshelf{% endblock %}
 {% block content %}
-<div class="books">
-  <div class="books__main">
-    <div class="page-head">
-      <h1 class="page-head__title">Books from 2019</h1>
-      <p class="page-head__subtitle">2 books</p>
+  <div class="books">
+    <div class="books__main">
+      <div class="page-head">
+        <h1 class="page-head__title">Books from {{ year }}</h1>
+        <p class="page-head__subtitle">
+          {{ books|length }} book{{ books|length|pluralize }}
+        </p>
+      </div>
+      {% if books %}
+        <div class="books__grid">
+          {% for book in books %}
+            {% include "components/book_card.html" %}
+          {% endfor %}
+        </div>
+      {% else %}
+        {% url "catalog:book-list" as list_url %}
+        {% include "components/empty.html" with title="No books here" text="Nothing matches this page yet." button="Browse all books" href=list_url secondary=True %}
+      {% endif %}
     </div>
-
-    <div class="books__grid">
-      {% include "components/book_card.html" with title="A Field Guide to Small Hours" author="Ines Okafor" price="$14.00" %}
-      {% include "components/book_card.html" with title="The Cartographer's Daughter" author="Mara Ellison" format="Audio" price="$22.00" %}
-    </div>
+    {% latest_books 3 %}
   </div>
-
-  {% latest_books 3 %}
-</div>
 {% endblock content %}
